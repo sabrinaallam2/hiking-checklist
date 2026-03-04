@@ -1198,7 +1198,8 @@
                + activePanel.offsetHeight
                + (footer ? footer.offsetHeight : 0)
                + 120;
-    window.parent.postMessage({ type: 'resize', height: height }, '*');
+    var tab = activePanel.id; // 'panel-day' or 'panel-overnight'
+    window.parent.postMessage({ type: 'resize', height: height, tab: tab }, '*');
   }
   window.addEventListener('load', function() {
     setTimeout(sendHeight, 300);
