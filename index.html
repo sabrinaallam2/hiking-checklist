@@ -1190,20 +1190,20 @@
 
 <script>
   function sendHeight() {
-    var hero = document.querySelector('.hero');
     var activePanel = document.querySelector('.tab-panel.active');
-    var footer = document.querySelector('.footer-note');
     if (!activePanel) return;
-    var height = (hero ? hero.offsetHeight : 0)
-               + activePanel.offsetHeight
-               + (footer ? footer.offsetHeight : 0)
-               + 120;
-    var tab = activePanel.id; // 'panel-day' or 'panel-overnight'
+    var tab = activePanel.id;
+    var isMobile = window.innerWidth < 768;
+    var height;
+    if (tab === 'panel-day') {
+      height = isMobile ? 3200 : 1600;
+    } else {
+      height = isMobile ? 4800 : 2600;
+    }
     window.parent.postMessage({ type: 'resize', height: height, tab: tab }, '*');
   }
   window.addEventListener('load', function() {
     setTimeout(sendHeight, 300);
-    setTimeout(sendHeight, 800);
   });
 </script>
 </body>
