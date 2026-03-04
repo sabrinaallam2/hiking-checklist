@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1191,27 +1190,24 @@
 
 <script>
   function sendHeight() {
-    // Temporarily make all panels visible to measure full height
-    var panels = document.querySelectorAll('.tab-panel');
     var activePanel = document.querySelector('.tab-panel.active');
+    if (!activePanel) return;
     
-    // Show all panels stacked to get true max height
-    panels.forEach(function(p) {
-      p.style.display = 'block';
-    });
+    // Get height of everything except tab panels
+    var hero = document.querySelector('.hero');
+    var main = document.querySelector('.main');
+    var footer = document.querySelector('.footer-note');
     
-    var height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    var heroH = hero ? hero.offsetHeight : 0;
+    var mainH = main ? main.scrollHeight : 0;
+    var footerH = footer ? footer.offsetHeight : 0;
     
-    // Restore only active panel
-    panels.forEach(function(p) {
-      p.style.display = p === activePanel ? 'block' : 'none';
-    });
-    
+    var height = heroH + mainH + footerH + 60;
     window.parent.postMessage({ type: 'resize', height: height }, '*');
   }
   window.addEventListener('load', function() {
-    setTimeout(sendHeight, 500);
-    setTimeout(sendHeight, 1200);
+    setTimeout(sendHeight, 300);
+    setTimeout(sendHeight, 800);
   });
 </script>
 </body>
