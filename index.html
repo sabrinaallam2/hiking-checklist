@@ -1102,15 +1102,12 @@
 </script>
 
 <script>
-  function sendHeight() {
-    const height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-    window.parent.postMessage({ type: 'resize', height: height }, '*');
-  }
-  window.addEventListener('load', sendHeight);
-  window.addEventListener('resize', sendHeight);
-  setTimeout(sendHeight, 300);
-  setTimeout(sendHeight, 800);
-  setTimeout(sendHeight, 1500);
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      window.parent.postMessage({ type: 'resize', height: height }, '*');
+    }, 500);
+  });
 </script>
 </body>
 </html>
