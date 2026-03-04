@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Hiking Checklist — Sabrina Allam</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red:        #AE524A;
+    --red-dark:   #8C3E37;
+    --red-light:  #C97A72;
+    --cream:      #F5F0EA;
+    --cream-mid:  #EDE6DC;
+    --cream-card: #FAF7F3;
+    --ink:        #1C1A18;
+    --ink-mid:    #3A3530;
+    --ink-light:  #6B6259;
+    --ink-faint:  #A89E94;
+    --border:     rgba(174,82,74,0.13);
+    --border-light: rgba(0,0,0,0.07);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--ink);
+    padding: 60px 24px 52px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 110%, rgba(174,82,74,0.28) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--red-light);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 7vw, 62px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .hero h1 em { font-style: italic; color: var(--red-light); }
+  .hero-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ink-faint);
+    margin: 0 auto 36px;
+    max-width: 380px;
+    line-height: 1.7;
+  }
+
+  /* ─── TABS ─── */
+  .tab-bar { display: flex; justify-content: center; gap: 6px; position: relative; z-index: 1; }
+  .tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    background: transparent;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.7); border-color: rgba(174,82,74,0.4); }
+  .tab-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+
+  /* ─── MAIN ─── */
+  .main { max-width: 920px; margin: 0 auto; padding: 44px 20px 80px; }
+
+  /* ─── META BAR ─── */
+  .meta-bar {
+    background: var(--cream-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin-bottom: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .meta-field { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 130px; }
+  .meta-label { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-faint); }
+  .meta-input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-light);
+    padding: 4px 0;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  .meta-input:focus { border-color: var(--red); }
+  .meta-input::placeholder { color: var(--ink-faint); }
+
+  /* ─── PROGRESS ─── */
+  .progress-wrap { margin-bottom: 32px; }
+  .progress-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .progress-label { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); }
+  .progress-count { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; color: var(--red); }
+  .progress-bar-track { height: 2px; background: var(--border-light); border-radius: 2px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--red-dark), var(--red-light)); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+
+  /* ─── ALL DONE ─── */
+  .all-done {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background: rgba(174,82,74,0.06);
+    border: 1px solid rgba(174,82,74,0.18);
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  .all-done.show { display: block; }
+  .all-done-emoji { font-size: 26px; margin-bottom: 6px; }
+  .all-done-text { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: var(--red); }
+
+  /* ─── GRID ─── */
+  .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+
+  /* ─── CATEGORY CARD ─── */
+  .category {
+    background: var(--cream-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 20px 16px;
+    animation: fadeUp 0.35s ease both;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .category-icon { font-size: 15px; }
+  .category-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .category-tally { margin-left: auto; font-size: 11px; color: var(--ink-faint); white-space: nowrap; }
+
+  /* ─── CHECKLIST ITEMS ─── */
+  .checklist { list-style: none; }
+  .checklist li { margin-bottom: 1px; }
+  .checklist li.sub-item { padding-left: 24px; }
+
+  .check-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .check-label:hover { background: rgba(174,82,74,0.05); }
+  .check-label input[type="checkbox"] { display: none; }
+
+  .check-box {
+    width: 16px; height: 16px; min-width: 16px;
+    border: 1.5px solid #C8BDB6;
+    border-radius: 3px;
+    margin-top: 2px;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-box::after {
+    content: '';
+    width: 8px; height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) scale(0);
+    transition: transform 0.12s ease;
+    margin-top: -2px;
+  }
+  .check-label input:checked ~ .check-box { background: var(--red); border-color: var(--red); }
+  .check-label input:checked ~ .check-box::after { transform: rotate(-45deg) scale(1); }
+
+  .check-text {
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.5;
+    flex: 1;
+    transition: color 0.15s, opacity 0.15s;
+  }
+  .check-label input:checked ~ .check-box ~ .check-text {
+    color: var(--ink-faint);
+    text-decoration: line-through;
+    text-decoration-color: var(--red-light);
+    opacity: 0.55;
+  }
+
+  /* ─── EDITABLE TEXT ─── */
+  .check-text[contenteditable="true"] {
+    outline: none;
+    border-radius: 3px;
+    padding: 0 3px;
+    min-width: 40px;
+  }
+  .check-text[contenteditable="true"]:focus {
+    background: rgba(174,82,74,0.06);
+    text-decoration: none !important;
+    opacity: 1 !important;
+    color: var(--ink-mid) !important;
+  }
+
+  /* ─── ADD ROW BUTTON ─── */
+  .add-row-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 8px;
+    padding: 5px 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink-faint);
+    background: transparent;
+    border: 1px dashed rgba(174,82,74,0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: all 0.18s;
+  }
+  .add-row-btn:hover { border-color: var(--red); color: var(--red); background: rgba(174,82,74,0.04); }
+  .add-row-btn span { font-size: 16px; line-height: 1; }
+
+  /* ─── DELETE ITEM BUTTON ─── */
+  .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    color: transparent;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 3px;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-label:hover .delete-btn { color: var(--ink-faint); }
+  .delete-btn:hover { color: var(--red) !important; background: rgba(174,82,74,0.08); }
+
+  /* ─── ACTIONS ─── */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary { background: var(--red); color: #fff; }
+  .btn-primary:hover { background: var(--red-dark); }
+  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--ink-light); }
+  .btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+  /* ─── FOOTER ─── */
+  .footer-note {
+    text-align: center;
+    padding: 28px 20px 40px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 2;
+    border-top: 1px solid var(--border);
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .footer-note a { color: var(--red); text-decoration: none; }
+  .footer-note a:hover { text-decoration: underline; }
+  .footer-links { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 4px; }
+
+  /* ─── PANELS ─── */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ─── CATEGORY RESTORE BUTTON ─── */
+  .cat-restore-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px 5px;
+    color: var(--ink-faint);
+    font-size: 13px;
+    line-height: 1;
+    border-radius: 3px;
+    transition: color 0.15s, background 0.15s;
+    margin-left: 4px;
+    flex-shrink: 0;
+    opacity: 0.4;
+  }
+  .cat-restore-btn:hover { color: var(--red) !important; background: rgba(174,82,74,0.08); opacity: 1; }
+
+  /* ─── PRINT BRANDING ─── */
+  .print-branding {
+    display: none;
+    text-align: center;
+    padding: 20px 0 8px;
+    border-top: 1px solid #ddd;
+    margin-top: 24px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .print-branding-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #AE524A;
+    letter-spacing: 0.5px;
+  }
+  .print-branding-sub {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #A89E94;
+    margin-top: 3px;
+  }
+  @media print {
+    .hero { padding: 24px; background: white !important; }
+    .hero::before { display: none; }
+    .hero-eyebrow, .hero-sub, .tab-bar { display: none !important; }
+    .hero h1 { color: var(--ink) !important; font-size: 28px; }
+    .tab-panel { display: block !important; }
+    .tab-panel.print-hide { display: none !important; }
+    .actions, .footer-note, .add-row-btn, .delete-btn, .cat-restore-btn { display: none !important; }
+    .print-branding { display: block !important; }
+    .print-branding a { color: #AE524A !important; text-decoration: none !important; }
+    .main { padding: 16px 0; }
+    .category { break-inside: avoid; border: 1px solid #ddd; }
+    .progress-wrap, .all-done, .meta-bar { display: none !important; }
+    body { background: white; }
+    .check-text[contenteditable] { -webkit-user-modify: read-only; }
+  }
+
+  @media (max-width: 580px) {
+    .checklist-grid { grid-template-columns: 1fr; }
+    .hero { padding: 44px 16px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Sabrina Allam · Trail Resources</p>
+  <h1>The Ultimate<br><em>Hiking Checklist</em></h1>
+  <p class="hero-sub">Pack smart. Hike further. Add your own items, tick as you go — progress saves automatically.</p>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('day', this)">☀ Day Hike</button>
+    <button class="tab-btn" onclick="switchTab('overnight', this)">🌙 Overnight</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══════════ DAY HIKE ══════════ -->
+  <div id="panel-day" class="tab-panel active">
+    <div class="meta-bar">
+      <div class="meta-field">
+        <span class="meta-label">Hike Name</span>
+        <input class="meta-input" id="day-name" type="text" placeholder="e.g. Royal National Park" oninput="saveMeta()">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Date</span>
+        <input class="meta-input" id="day-date" type="date" oninput="saveMeta()">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Pack Weight (kg)</span>
+        <input class="meta-input" id="day-weight" type="number" placeholder="0.0" step="0.1" oninput="saveMeta()">
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Packed</span>
+        <span class="progress-count" id="day-count">0 / 0</span>
+      </div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="day-bar"></div></div>
+    </div>
+
+    <div class="all-done" id="day-done">
+      <div class="all-done-emoji">🥾</div>
+      <div class="all-done-text">You're ready. Get out there.</div>
+    </div>
+
+    <div class="checklist-grid">
+
+      <div class="category" style="animation-delay:.04s">
+        <div class="category-header">
+          <span class="category-icon">👟</span>
+          <span class="category-title">Footwear & Clothing</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking shoes/trail runners</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking socks</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Rain jacket/wind breaker</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking pants/shorts + top</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Layers + fleece (depending on weather)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Down jacket (depending on weather)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Gaiters, if needed. Good for snake protection.</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.08s">
+        <div class="category-header">
+          <span class="category-icon">🛡</span>
+          <span class="category-title">Safety</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">First Aid Kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Snake bite kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Map and Compass</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">PLB (Personal Locator Beacon)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Emergency Blanket</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Fire kit, including matches and/or flint</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Whistle</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Pocket knife</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.12s">
+        <div class="category-header">
+          <span class="category-icon">🎒</span>
+          <span class="category-title">Equipment</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Daypack 20L - 30L</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Headlamp</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Water bottle or hydration reservoir</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking poles, if needed</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Water purification</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Toilet kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Dry bag</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Food, including snacks + lunch. Always take slightly extra.</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.16s">
+        <div class="category-header">
+          <span class="category-icon">📷</span>
+          <span class="category-title">Electronics</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Phone</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Powerbank</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Camera Body</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Lens</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Camera Batteries</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Tripod</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">360 Camera</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Drone</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.2s">
+        <div class="category-header">
+          <span class="category-icon">✨</span>
+          <span class="category-title">Extra Items</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hat</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sunglasses</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sunscreen</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Lip Balm</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+    </div><!-- /grid -->
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="printTab('day')">Save as PDF</button>
+      <button class="btn btn-ghost" onclick="resetTab('day')">Reset Checklist</button>
+    </div>
+  </div>
+
+  <!-- ══════════ OVERNIGHT ══════════ -->
+  <div id="panel-overnight" class="tab-panel">
+    <div class="meta-bar">
+      <div class="meta-field">
+        <span class="meta-label">Hike Name</span>
+        <input class="meta-input" id="on-name" type="text" placeholder="e.g. Overland Track" oninput="saveMeta()">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Date</span>
+        <input class="meta-input" id="on-date" type="date" oninput="saveMeta()">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Base Weight (kg)</span>
+        <input class="meta-input" id="on-base" type="number" placeholder="0.0" step="0.1" oninput="saveMeta()">
+      </div>
+      <div class="meta-field">
+        <span class="meta-label">Total Weight (kg)</span>
+        <input class="meta-input" id="on-total" type="number" placeholder="0.0" step="0.1" oninput="saveMeta()">
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Packed</span>
+        <span class="progress-count" id="on-count">0 / 0</span>
+      </div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="on-bar"></div></div>
+    </div>
+
+    <div class="all-done" id="on-done">
+      <div class="all-done-emoji">⛺</div>
+      <div class="all-done-text">You're ready. Get out there.</div>
+    </div>
+
+    <div class="checklist-grid">
+
+      <div class="category" style="animation-delay:.04s">
+        <div class="category-header">
+          <span class="category-icon">👟</span>
+          <span class="category-title">Footwear & Clothing</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking shoes/trail runners</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Rain jacket/wind breaker</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking pants or shorts</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Cold Weather</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Down jacket</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Fleece</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Thermal set/base layers</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Waterproof pants</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Gloves</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Beanie</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">1-2 pairs underwear</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">2-3 pairs socks</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hat</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sunglasses</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Camp shoes</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Gaiters (if needed, good for snake protection)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.08s">
+        <div class="category-header">
+          <span class="category-icon">🛡</span>
+          <span class="category-title">Safety</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">First Aid Kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Snake bite kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Paper map (laminated/waterproof) + pencil</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Compass</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Downloaded map</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">PLB (Personal Locator Beacon)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Emergency Blanket</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Fire kit (waterproof matches and/or flint, lighter, and fire starter i.e. cotton wool with Vaseline)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Whistle</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Pocket knife</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Repair kit</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Para cord (optional)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.12s">
+        <div class="category-header">
+          <span class="category-icon">⛺</span>
+          <span class="category-title">Storage, Sleep & Shelter</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Backpack 40-65L</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Dry bag/waterproof liner</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Tent body + rainfly</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hiking poles/tent poles</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Pegs</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Groundsheet</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sleeping bag</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sleeping pad/mat</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Pillow or stuff sack</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.16s">
+        <div class="category-header">
+          <span class="category-icon">🍳</span>
+          <span class="category-title">Camp Kitchen</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Stove</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Fuel</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Cook pot</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Cup/mug</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Spoon/spork</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Knife</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Lighter</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Rubbish Bag/snap-lock bags</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Compact pot scraper (optional)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Quick-dry towel (optional)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Washing supplies (optional)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.2s">
+        <div class="category-header">
+          <span class="category-icon">💧</span>
+          <span class="category-title">Food & Water</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Water bottle</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hydration reservoir</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Water treatment system (filter, micropur tablets, UV purifer etc)</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Food. Always take a little more than you think you need</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Breakfast</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Lunch</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Dinner</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Snacks</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Coffee, Tea, Hot Chocolate</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.24s">
+        <div class="category-header">
+          <span class="category-icon">🧴</span>
+          <span class="category-title">Personal Toiletries</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Sunscreen</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Insect Repellant</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Lip Balm</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Deodorant</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Toothbrush + paste</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Women's sanitary supplies</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Toilet paper/wipes + sealable opaque bag to pack it out</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Digging Trowel</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Hand Sanitiser</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.28s">
+        <div class="category-header">
+          <span class="category-icon">📷</span>
+          <span class="category-title">Electronics</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Phone</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Headlamp</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Powerbank + cords</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Smart Watch/Fitbit/Garmin/G-Shock</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Optional</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Airpods/earphones</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Camera + lens</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Spare camera batteries</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Tripod</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">360 camera</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li class="sub-item"><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Drone</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Waterproof pouch/sack</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+      <div class="category" style="animation-delay:.32s">
+        <div class="category-header">
+          <span class="category-icon">🚗</span>
+          <span class="category-title">Pack in Car</span>
+          <span class="category-tally"></span><button class="cat-restore-btn" onclick="restoreCategory(this)" title="Restore this category to defaults">↺</button>
+        </div>
+        <ul class="checklist">
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Clean clothes + shoes to change into</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Phone Charger</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Water</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+          <li><label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">Snacks</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label></li>
+        </ul>
+        <button class="add-row-btn" onclick="addItem(this)"><span>+</span> Add item</button>
+      </div>
+
+    </div><!-- /grid -->
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="printTab('overnight')">Save as PDF</button>
+      <button class="btn btn-ghost" onclick="resetTab('overnight')">Reset Checklist</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- PRINT BRANDING - only visible when printing -->
+<div class="print-branding">
+  <div class="print-branding-name">Sabrina Allam</div>
+  <div class="print-branding-sub">
+    <a href="https://www.sabrinaallam.au" style="color:#AE524A; text-decoration:none;">sabrinaallam.au</a>
+    &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/sabrinaallam_" style="color:#AE524A; text-decoration:none;">@sabrinaallam_</a>
+    <br>A free hiking resource
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-note">
+  A free resource by <a href="https://www.sabrinaallam.au">Sabrina Allam</a> ·
+  If this helped you get outside, <a href="https://ko-fi.com/sabrinaallam">buy me a coffee ☕</a>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/sabrinaallam_">Instagram → @sabrinaallam_</a>
+    <a href="https://www.youtube.com/@sabrina-allam">YouTube → Sabrina Allam</a>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'sa_checklist_v2';
+
+  // ── STORAGE HELPERS ──
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveState(s) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
+  }
+
+  // ── INIT ──
+  function init() {
+    const state = loadState();
+
+    // Restore custom items first
+    if (state.customItems) {
+      state.customItems.forEach(({ panelId, catIndex, text }) => {
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        const cats = panel.querySelectorAll('.category');
+        const cat = cats[catIndex];
+        if (!cat) return;
+        const ul = cat.querySelector('.checklist');
+        appendNewItem(ul, text);
+      });
+    }
+
+    // Restore checkboxes
+    document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
+      const key = getCheckKey(cb, i);
+      if (state.checks && state.checks[key]) cb.checked = true;
+      cb.addEventListener('change', () => { persistChecks(); updateAllProgress(); });
+    });
+
+    // Restore edited text
+    document.querySelectorAll('.check-text[contenteditable]').forEach((el, i) => {
+      if (state.texts && state.texts[i] !== undefined) el.textContent = state.texts[i];
+      el.addEventListener('input', persistTexts);
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+    });
+
+    // Restore meta
+    ['day-name','day-date','day-weight','on-name','on-date','on-base','on-total'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el && state.meta && state.meta[id]) el.value = state.meta[id];
+    });
+
+    updateAllProgress();
+  }
+
+  function getCheckKey(cb, fallback) {
+    const ul = cb.closest('[data-cat]');
+    if (ul) {
+      const items = ul.querySelectorAll('input[type="checkbox"]');
+      const idx = [...items].indexOf(cb);
+      return `${ul.dataset.cat}_${idx}`;
+    }
+    return `cb_${fallback}`;
+  }
+
+  // ── PERSIST ──
+  function persistChecks() {
+    const state = loadState();
+    state.checks = {};
+    document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
+      state.checks[getCheckKey(cb, i)] = cb.checked;
+    });
+    saveState(state);
+  }
+
+  function persistTexts() {
+    const state = loadState();
+    state.texts = {};
+    document.querySelectorAll('.check-text[contenteditable]').forEach((el, i) => {
+      state.texts[i] = el.textContent;
+    });
+    saveState(state);
+  }
+
+  function saveMeta() {
+    const state = loadState();
+    state.meta = {};
+    ['day-name','day-date','day-weight','on-name','on-date','on-base','on-total'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) state.meta[id] = el.value;
+    });
+    saveState(state);
+  }
+
+  // ── ADD ITEM ──
+  function addItem(btn) {
+    const ul = btn.previousElementSibling;
+    const li = appendNewItem(ul, '');
+
+    // Save to state
+    const state = loadState();
+    if (!state.customItems) state.customItems = [];
+    const panel = btn.closest('.tab-panel');
+    const cats = panel.querySelectorAll('.category');
+    const cat = btn.closest('.category');
+    const catIndex = [...cats].indexOf(cat);
+    state.customItems.push({ panelId: panel.id, catIndex, text: '' });
+    saveState(state);
+
+    // Focus new item
+    const textEl = li.querySelector('.check-text');
+    textEl.focus();
+    const range = document.createRange();
+    range.selectNodeContents(textEl);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    updateAllProgress();
+  }
+
+  function appendNewItem(ul, text) {
+    const li = document.createElement('li');
+    li.innerHTML = `<label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">${text || 'New item'}</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label>`;
+    ul.appendChild(li);
+
+    const cb = li.querySelector('input[type="checkbox"]');
+    cb.addEventListener('change', () => { persistChecks(); updateAllProgress(); });
+
+    const textEl = li.querySelector('.check-text');
+    textEl.addEventListener('input', () => { persistTexts(); });
+    textEl.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); textEl.blur(); } });
+
+    // Clear placeholder text on focus
+    if (!text) {
+      textEl.addEventListener('focus', function onFocus() {
+        if (textEl.textContent === 'New item') { textEl.textContent = ''; }
+        textEl.removeEventListener('focus', onFocus);
+      });
+    }
+
+    return li;
+  }
+
+  // ── DELETE ITEM ──
+  function deleteItem(btn) {
+    const li = btn.closest('li');
+    if (!li) return;
+    li.style.opacity = '0';
+    li.style.transition = 'opacity 0.2s';
+    setTimeout(() => {
+      li.remove();
+      persistChecks();
+      persistTexts();
+      updateAllProgress();
+    }, 200);
+  }
+
+  // ── PROGRESS ──
+  function updateAllProgress() {
+    updateProgress('day');
+    updateProgress('overnight');
+    updateTallies();
+  }
+
+  function updateProgress(tab) {
+    const prefix = tab === 'day' ? 'day' : 'on';
+    const panel = document.getElementById(`panel-${tab}`);
+    const boxes = panel.querySelectorAll('input[type="checkbox"]');
+    const checked = [...boxes].filter(b => b.checked).length;
+    const total = boxes.length;
+    const pct = total ? Math.round((checked / total) * 100) : 0;
+    document.getElementById(`${prefix}-count`).textContent = `${checked} / ${total}`;
+    document.getElementById(`${prefix}-bar`).style.width = pct + '%';
+    const doneEl = document.getElementById(`${prefix}-done`);
+    doneEl.classList.toggle('show', total > 0 && checked === total);
+  }
+
+  function updateTallies() {
+    document.querySelectorAll('.category').forEach(cat => {
+      const boxes = cat.querySelectorAll('input[type="checkbox"]');
+      const checked = [...boxes].filter(b => b.checked).length;
+      const tally = cat.querySelector('.category-tally');
+      if (tally) tally.textContent = (checked === boxes.length && boxes.length > 0) ? '✓ done' : `${checked}/${boxes.length}`;
+    });
+  }
+
+  // ── TAB SWITCH ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`panel-${tab}`).classList.add('active');
+    btn.classList.add('active');
+    updateAllProgress();
+  }
+
+  // ── PRINT / PDF ──
+  function printTab(tab) {
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('print-hide', !p.id.includes(tab));
+    });
+    window.print();
+    setTimeout(() => document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('print-hide')), 1000);
+  }
+
+  // ── RESET CHECKBOXES ──
+  function resetTab(tab) {
+    const label = tab === 'day' ? 'Day Hike' : 'Overnight';
+    if (!confirm(`Fully reset the ${label} checklist? This will restore all original items and uncheck everything.`)) return;
+
+    const panel = document.getElementById(`panel-${tab}`);
+    // Restore every category using the same logic as restoreCategory
+    panel.querySelectorAll('.category').forEach(cat => {
+      const restoreBtn = cat.querySelector('.cat-restore-btn');
+      if (restoreBtn) _restoreCategory(cat, tab);
+    });
+
+    // Wipe all saved state for this tab
+    const state = loadState();
+    const prefix = tab === 'day' ? 'day-' : 'on-';
+    if (state.checks) Object.keys(state.checks).forEach(k => { if (k.startsWith(prefix)) delete state.checks[k]; });
+    state.texts = {};
+    state.customItems = (state.customItems || []).filter(item => item.panelId !== `panel-${tab}`);
+    saveState(state);
+
+    updateAllProgress();
+  }
+
+  // ── RESTORE SINGLE CATEGORY ──
+  const SUB_ITEMS = {
+    'Cold Weather': ['Down jacket','Fleece','Thermal set/base layers','Waterproof pants','Gloves','Beanie'],
+    'Optional': ['Airpods/earphones','Camera + lens','Spare camera batteries','Tripod','360 camera','Drone'],
+    'Food. Always take a little more than you think you need': ['Breakfast','Lunch','Dinner','Snacks','Coffee, Tea, Hot Chocolate'],
+  };
+
+  function _restoreCategory(cat, tab) {
+    const panel = document.getElementById(`panel-${tab}`);
+    const defaults = DEFAULTS[tab];
+    const cats = [...panel.querySelectorAll('.category')];
+    const catIndex = cats.indexOf(cat);
+    const catKey = Object.keys(defaults)[catIndex];
+    if (!catKey || !defaults[catKey]) return;
+
+    const ul = cat.querySelector('.checklist');
+    ul.innerHTML = '';
+
+    let currentParent = null;
+    defaults[catKey].forEach(text => {
+      // Check if this text is a sub-item of the last seen parent
+      const isSub = currentParent !== null && SUB_ITEMS[currentParent]?.includes(text);
+      // Check if this text is itself a parent
+      if (SUB_ITEMS[text]) currentParent = text;
+      else if (!isSub) currentParent = null;
+
+      const li = document.createElement('li');
+      if (isSub) li.className = 'sub-item';
+      li.innerHTML = `<label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">${text}</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label>`;
+      ul.appendChild(li);
+      li.querySelector('input').addEventListener('change', () => { persistChecks(); updateAllProgress(); });
+      li.querySelector('.check-text').addEventListener('input', persistTexts);
+      li.querySelector('.check-text').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
+    });
+  }
+
+  function restoreCategory(btn) {
+    const cat = btn.closest('.category');
+    const panel = btn.closest('.tab-panel');
+    const tab = panel.id.replace('panel-', '');
+    const title = cat.querySelector('.category-title').textContent;
+    if (!confirm(`Restore "${title}" to its original items?`)) return;
+    _restoreCategory(cat, tab);
+    persistChecks();
+    persistTexts();
+    updateAllProgress();
+  }
+
+  // ── RESTORE ALL DEFAULTS ──
+  const DEFAULTS = {
+    day: {
+      'day-0': ['Hiking shoes/trail runners','Hiking socks','Rain jacket/wind breaker','Hiking pants/shorts + top','Layers + fleece (depending on weather)','Down jacket (depending on weather)','Gaiters, if needed. Good for snake protection.'],
+      'day-1': ['First Aid Kit','Snake bite kit','Map and Compass','PLB (Personal Locator Beacon)','Emergency Blanket','Fire kit, including matches and/or flint','Whistle','Pocket knife'],
+      'day-2': ['Daypack 20L - 30L','Headlamp','Water bottle or hydration reservoir','Hiking poles, if needed','Water purification','Toilet kit','Dry bag','Food, including snacks + lunch. Always take slightly extra.'],
+      'day-3': ['Phone','Powerbank','Camera Body','Lens','Camera Batteries','Tripod','360 Camera','Drone'],
+      'day-4': ['Hat','Sunglasses','Sunscreen','Lip Balm']
+    },
+    overnight: {
+      'on-0': ['Hiking shoes/trail runners','Rain jacket/wind breaker','Hiking pants or shorts','Cold Weather','Down jacket','Fleece','Thermal set/base layers','Waterproof pants','Gloves','Beanie','1-2 pairs underwear','2-3 pairs socks','Hat','Sunglasses','Camp shoes','Gaiters (if needed, good for snake protection)'],
+      'on-1': ['First Aid Kit','Snake bite kit','Paper map (laminated/waterproof) + pencil','Compass','Downloaded map','PLB (Personal Locator Beacon)','Emergency Blanket','Fire kit (waterproof matches and/or flint, lighter, and fire starter i.e. cotton wool with Vaseline)','Whistle','Pocket knife','Repair kit','Para cord (optional)'],
+      'on-2': ['Backpack 40-65L','Dry bag/waterproof liner','Tent body + rainfly','Hiking poles/tent poles','Pegs','Groundsheet','Sleeping bag','Sleeping pad/mat','Pillow or stuff sack'],
+      'on-3': ['Stove','Fuel','Cook pot','Cup/mug','Spoon/spork','Knife','Lighter','Rubbish Bag/snap-lock bags','Compact pot scraper (optional)','Quick-dry towel (optional)','Washing supplies (optional)'],
+      'on-4': ['Water bottle','Hydration reservoir','Water treatment system (filter, micropur tablets, UV purifer etc)','Food. Always take a little more than you think you need','Breakfast','Lunch','Dinner','Snacks','Coffee, Tea, Hot Chocolate'],
+      'on-5': ['Sunscreen','Insect Repellant','Lip Balm','Deodorant','Toothbrush + paste','Women\'s sanitary supplies','Toilet paper/wipes + sealable opaque bag to pack it out','Digging Trowel','Hand Sanitiser'],
+      'on-6': ['Phone','Headlamp','Powerbank + cords','Smart Watch/Fitbit/Garmin/G-Shock','Optional','Airpods/earphones','Camera + lens','Spare camera batteries','Tripod','360 camera','Drone','Waterproof pouch/sack'],
+      'on-7': ['Clean clothes + shoes to change into','Phone Charger','Water','Snacks']
+    }
+  };
+
+  function restoreDefaults(tab) {
+    const label = tab === 'day' ? 'Day Hike' : 'Overnight';
+    if (!confirm(`Restore the ${label} checklist to its original items? This will undo any edits, additions, or deletions — but your hike details and ticked items will be cleared too.`)) return;
+
+    const panel = document.getElementById(`panel-${tab}`);
+    const defaults = DEFAULTS[tab];
+    const cats = panel.querySelectorAll('.category');
+
+    cats.forEach(cat => {
+      const ul = cat.querySelector('.checklist');
+      const catKey = Object.keys(defaults)[([...panel.querySelectorAll('.category')].indexOf(cat))];
+      if (!catKey || !defaults[catKey]) return;
+
+      // Clear all existing items
+      ul.innerHTML = '';
+
+      // Re-add default items
+      defaults[catKey].forEach(text => {
+        const li = document.createElement('li');
+        li.innerHTML = `<label class="check-label"><input type="checkbox"><span class="check-box"></span><span class="check-text" contenteditable="true" spellcheck="false">${text}</span><button class="delete-btn" onclick="deleteItem(this)" title="Remove">×</button></label>`;
+        ul.appendChild(li);
+        const cb = li.querySelector('input[type="checkbox"]');
+        cb.addEventListener('change', () => { persistChecks(); updateAllProgress(); });
+        const textEl = li.querySelector('.check-text');
+        textEl.addEventListener('input', persistTexts);
+        textEl.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); textEl.blur(); } });
+      });
+    });
+
+    // Clear saved state for this tab
+    const state = loadState();
+    state.checks = {};
+    state.texts = {};
+    state.customItems = (state.customItems || []).filter(item => item.panelId !== `panel-${tab}`);
+    saveState(state);
+
+    updateAllProgress();
+  }
+
+  init();
+</script>
+</body>
+</html>
