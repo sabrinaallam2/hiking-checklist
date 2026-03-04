@@ -1110,9 +1110,10 @@
   const observer = new MutationObserver(sendHeight);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true });
   window.addEventListener('resize', sendHeight);
-  // Keep firing until parent picks it up
-  setTimeout(sendHeight, 500);
-  setTimeout(sendHeight, 1500);
+  setTimeout(sendHeight, 300);
+  setTimeout(sendHeight, 600);
+  setTimeout(sendHeight, 1000);
+  setTimeout(sendHeight, 2000);
 </script>
 </body>
 </html>
