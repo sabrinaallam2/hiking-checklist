@@ -971,9 +971,7 @@
     document.getElementById(`panel-${tab}`).classList.add('active');
     btn.classList.add('active');
     updateAllProgress();
-    // Notify parent iframe of new height after tab switch
-    setTimeout(sendHeight, 100);
-    setTimeout(sendHeight, 400);
+    setTimeout(sendHeight, 50);
   }
 
   // ── PRINT / PDF ──
@@ -1196,9 +1194,9 @@
     var isMobile = window.innerWidth < 768;
     var height;
     if (tab === 'panel-day') {
-      height = isMobile ? 3200 : 1600;
+      height = isMobile ? 3400 : 2000;
     } else {
-      height = isMobile ? 4800 : 2600;
+      height = isMobile ? 5200 : 4600;
     }
     window.parent.postMessage({ type: 'resize', height: height, tab: tab }, '*');
   }
