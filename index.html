@@ -1190,19 +1190,14 @@
 
 <script>
   function sendHeight() {
-    var activePanel = document.querySelector('.tab-panel.active');
-    if (!activePanel) return;
-    
-    // Get height of everything except tab panels
     var hero = document.querySelector('.hero');
-    var main = document.querySelector('.main');
+    var activePanel = document.querySelector('.tab-panel.active');
     var footer = document.querySelector('.footer-note');
-    
-    var heroH = hero ? hero.offsetHeight : 0;
-    var mainH = main ? main.scrollHeight : 0;
-    var footerH = footer ? footer.offsetHeight : 0;
-    
-    var height = heroH + mainH + footerH + 60;
+    if (!activePanel) return;
+    var height = (hero ? hero.offsetHeight : 0)
+               + activePanel.offsetHeight
+               + (footer ? footer.offsetHeight : 0)
+               + 120;
     window.parent.postMessage({ type: 'resize', height: height }, '*');
   }
   window.addEventListener('load', function() {
