@@ -1190,7 +1190,22 @@
 
 <script>
   function sendHeight() {
+    // Temporarily make all panels visible to measure full height
+    var panels = document.querySelectorAll('.tab-panel');
+    var activePanel = document.querySelector('.tab-panel.active');
+    
+    // Show all panels stacked to get true max height
+    panels.forEach(function(p) {
+      p.style.display = 'block';
+    });
+    
     var height = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    
+    // Restore only active panel
+    panels.forEach(function(p) {
+      p.style.display = p === activePanel ? 'block' : 'none';
+    });
+    
     window.parent.postMessage({ type: 'resize', height: height }, '*');
   }
   window.addEventListener('load', function() {
