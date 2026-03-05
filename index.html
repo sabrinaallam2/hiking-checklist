@@ -320,49 +320,35 @@
   .tab-panel.active { display: block; }
 
   /* ─── CUSTOM MODAL ─── */
-  .modal-overlay {
+  .modal-overlay { display: none; }
+  .inline-confirm {
     display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(28,26,24,0.5);
-    z-index: 1000;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 60px 20px 20px;
-  }
-  .modal-overlay.show { display: flex; }
-  .modal {
     background: var(--cream-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 32px 28px 24px;
-    max-width: 380px;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 20px;
     width: 100%;
     text-align: center;
     animation: fadeUp 0.2s ease both;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
   }
-  .modal-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 10px;
-  }
-  .modal-message {
-    font-size: 13px;
+  .inline-confirm.show { display: block; }
+  .inline-confirm-message {
+    font-size: 12px;
     font-weight: 300;
     color: var(--ink-light);
-    line-height: 1.6;
-    margin-bottom: 24px;
+    line-height: 1.5;
+    margin-bottom: 12px;
   }
-  .modal-buttons { display: flex; gap: 10px; justify-content: center; }
+  .inline-confirm-buttons { display: flex; gap: 8px; justify-content: center; }
   .modal-btn {
     font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 10px 24px;
+    padding: 8px 18px;
     border-radius: 3px;
     cursor: pointer;
     border: none;
@@ -594,6 +580,13 @@
       <button class="btn btn-primary" onclick="printTab('day')">Save as PDF</button>
       <button class="btn btn-ghost" onclick="resetTab('day')">Reset Checklist</button>
     </div>
+    <div id="confirm-day" class="inline-confirm">
+      <div class="inline-confirm-message" id="confirm-day-msg"></div>
+      <div class="inline-confirm-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeConfirm('day')">Cancel</button>
+        <button class="modal-btn modal-btn-confirm" id="confirm-day-ok">Reset</button>
+      </div>
+    </div>
   </div>
 
   <!-- ══════════ OVERNIGHT ══════════ -->
@@ -807,6 +800,13 @@
     <div class="actions">
       <button class="btn btn-primary" onclick="printTab('overnight')">Save as PDF</button>
       <button class="btn btn-ghost" onclick="resetTab('overnight')">Reset Checklist</button>
+    </div>
+    <div id="confirm-overnight" class="inline-confirm">
+      <div class="inline-confirm-message" id="confirm-overnight-msg"></div>
+      <div class="inline-confirm-buttons">
+        <button class="modal-btn modal-btn-cancel" onclick="closeConfirm('overnight')">Cancel</button>
+        <button class="modal-btn modal-btn-confirm" id="confirm-overnight-ok">Reset</button>
+      </div>
     </div>
   </div>
 
@@ -1039,19 +1039,23 @@
 
   // ── CUSTOM CONFIRM MODAL ──
   function showConfirm(title, message, onConfirm) {
-    const overlay = document.getElementById('custom-modal');
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-message').textContent = message;
-    overlay.classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.parent.postMessage({ type: 'scrollTop' }, '*');
-    const confirmBtn = document.getElementById('modal-confirm');
-    const cancelBtn = document.getElementById('modal-cancel');
-    const close = () => overlay.classList.remove('show');
-    const handleConfirm = () => { close(); onConfirm(); confirmBtn.removeEventListener('click', handleConfirm); cancelBtn.removeEventListener('click', close); };
-    confirmBtn.addEventListener('click', handleConfirm);
-    cancelBtn.addEventListener('click', close);
-    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    const activePanel = document.querySelector('.tab-panel.active');
+    const tab = activePanel.id.replace('panel-', '');
+    const confirmEl = document.getElementById(`confirm-${tab}`);
+    const msgEl = document.getElementById(`confirm-${tab}-msg`);
+    const okBtn = document.getElementById(`confirm-${tab}-ok`);
+    msgEl.textContent = message;
+    confirmEl.classList.add('show');
+    const handler = () => {
+      closeConfirm(tab);
+      onConfirm();
+      okBtn.removeEventListener('click', handler);
+    };
+    okBtn.addEventListener('click', handler);
+  }
+
+  function closeConfirm(tab) {
+    document.getElementById(`confirm-${tab}`).classList.remove('show');
   }
 
   // ── RESET CHECKBOXES ──
@@ -1118,17 +1122,10 @@
     const cat = btn.closest('.category');
     const panel = btn.closest('.tab-panel');
     const tab = panel.id.replace('panel-', '');
-    const title = cat.querySelector('.category-title').textContent;
-    showConfirm(
-      'Restore Category',
-      `Restore "${title}" to its original items?`,
-      () => {
-        _restoreCategory(cat, tab);
-        persistChecks();
-        persistTexts();
-        updateAllProgress();
-      }
-    );
+    _restoreCategory(cat, tab);
+    persistChecks();
+    persistTexts();
+    updateAllProgress();
   }
 
   // ── AFFILIATE ITEMS ──
@@ -1257,18 +1254,6 @@
 
   init();
 </script>
-
-<!-- CUSTOM MODAL -->
-<div class="modal-overlay" id="custom-modal">
-  <div class="modal">
-    <div class="modal-title" id="modal-title"></div>
-    <div class="modal-message" id="modal-message"></div>
-    <div class="modal-buttons">
-      <button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancel</button>
-      <button class="modal-btn modal-btn-confirm" id="modal-confirm">Confirm</button>
-    </div>
-  </div>
-</div>
 
 <script>
   function sendHeight() {
