@@ -816,27 +816,26 @@
 <div class="print-branding">
   <div class="print-branding-name">Sabrina Allam</div>
   <div class="print-branding-sub">
-    <a href="https://www.sabrinaallam.au" style="color:#AE524A; text-decoration:none;">sabrinaallam.au</a>
+    <a href="https://www.sabrinaallam.au" target="_blank" rel="noopener" style="color:#AE524A; text-decoration:none;">sabrinaallam.au</a>
     &nbsp;·&nbsp;
-    <a href="https://www.instagram.com/sabrinaallam_" style="color:#AE524A; text-decoration:none;">@sabrinaallam_</a>
+    <a href="https://www.instagram.com/sabrinaallam_" target="_blank" rel="noopener" style="color:#AE524A; text-decoration:none;">@sabrinaallam_</a>
     <br>A free hiking resource
   </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer-note">
-  A free resource by <a href="https://www.sabrinaallam.au">Sabrina Allam</a> ·
-  If you found this helpful and would like to support me in creating more resources, you can <a href="https://ko-fi.com/sabrinaallam">buy me a coffee ☕</a>
+  A free resource by <a href="https://www.sabrinaallam.au" target="_blank" rel="noopener">Sabrina Allam</a> ·
+  If you found this helpful and would like to support me in creating more resources, you can <a href="https://ko-fi.com/sabrinaallam" target="_blank" rel="noopener">buy me a coffee ☕</a>
   <div class="footer-links">
-    <a href="https://www.instagram.com/sabrinaallam_">Instagram → @sabrinaallam_</a>
-    <a href="https://www.youtube.com/@sabrina-allam">YouTube → Sabrina Allam</a>
+    <a href="https://www.instagram.com/sabrinaallam_" target="_blank" rel="noopener">Instagram → @sabrinaallam_</a>
+    <a href="https://www.youtube.com/@sabrina-allam" target="_blank" rel="noopener">YouTube → Sabrina Allam</a>
   </div>
 </div>
 
 <script>
   const STORAGE_KEY = 'sa_checklist_v2';
 
-  // ── STORAGE HELPERS ──
   function loadState() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
     catch { return {}; }
@@ -845,11 +844,9 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
   }
 
-  // ── INIT ──
   function init() {
     const state = loadState();
 
-    // Restore custom items first
     if (state.customItems) {
       state.customItems.forEach(({ panelId, catIndex, text }) => {
         const panel = document.getElementById(panelId);
@@ -862,21 +859,18 @@
       });
     }
 
-    // Restore checkboxes
     document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
       const key = getCheckKey(cb, i);
       if (state.checks && state.checks[key]) cb.checked = true;
       cb.addEventListener('change', () => { persistChecks(); updateAllProgress(); });
     });
 
-    // Restore edited text
     document.querySelectorAll('.check-text[contenteditable]').forEach((el, i) => {
       if (state.texts && state.texts[i] !== undefined) el.textContent = state.texts[i];
       el.addEventListener('input', persistTexts);
       el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
     });
 
-    // Restore meta
     ['day-name','day-date','day-weight','on-name','on-date','on-base','on-total'].forEach(id => {
       const el = document.getElementById(id);
       if (el && state.meta && state.meta[id]) el.value = state.meta[id];
@@ -895,7 +889,6 @@
     return `cb_${fallback}`;
   }
 
-  // ── PERSIST ──
   function persistChecks() {
     const state = loadState();
     state.checks = {};
@@ -924,12 +917,10 @@
     saveState(state);
   }
 
-  // ── ADD ITEM ──
   function addItem(btn) {
     const ul = btn.previousElementSibling;
     const li = appendNewItem(ul, '');
 
-    // Save to state
     const state = loadState();
     if (!state.customItems) state.customItems = [];
     const panel = btn.closest('.tab-panel');
@@ -939,7 +930,6 @@
     state.customItems.push({ panelId: panel.id, catIndex, text: '' });
     saveState(state);
 
-    // Focus new item
     const textEl = li.querySelector('.check-text');
     textEl.focus();
     const range = document.createRange();
@@ -964,7 +954,6 @@
     textEl.addEventListener('input', () => { persistTexts(); });
     textEl.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); textEl.blur(); } });
 
-    // Clear placeholder text on focus
     if (!text) {
       textEl.addEventListener('focus', function onFocus() {
         if (textEl.textContent === 'New item') { textEl.textContent = ''; }
@@ -975,7 +964,6 @@
     return li;
   }
 
-  // ── DELETE ITEM ──
   function deleteItem(btn) {
     const li = btn.closest('li');
     if (!li) return;
@@ -989,7 +977,6 @@
     }, 200);
   }
 
-  // ── PROGRESS ──
   function updateAllProgress() {
     updateProgress('day');
     updateProgress('overnight');
@@ -1018,7 +1005,6 @@
     });
   }
 
-  // ── TAB SWITCH ──
   function switchTab(tab, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1028,7 +1014,6 @@
     setTimeout(sendHeight, 50);
   }
 
-  // ── PRINT / PDF ──
   function printTab(tab) {
     document.querySelectorAll('.tab-panel').forEach(p => {
       p.classList.toggle('print-hide', !p.id.includes(tab));
@@ -1037,7 +1022,6 @@
     setTimeout(() => document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('print-hide')), 1000);
   }
 
-  // ── CUSTOM CONFIRM MODAL ──
   function showConfirm(title, message, onConfirm) {
     const activePanel = document.querySelector('.tab-panel.active');
     const tab = activePanel.id.replace('panel-', '');
@@ -1058,7 +1042,6 @@
     document.getElementById(`confirm-${tab}`).classList.remove('show');
   }
 
-  // ── RESET CHECKBOXES ──
   function resetTab(tab) {
     const label = tab === 'day' ? 'Day Hike' : 'Overnight';
     showConfirm(
@@ -1081,7 +1064,6 @@
     );
   }
 
-  // ── RESTORE SINGLE CATEGORY ──
   const SUB_ITEMS = {
     'Cold Weather': ['Down jacket','Fleece','Thermal set/base layers','Waterproof pants','Gloves','Beanie'],
     'Optional': ['Airpods/earphones','Camera + lens','Spare camera batteries','Tripod','360 camera','Drone'],
@@ -1128,7 +1110,6 @@
     updateAllProgress();
   }
 
-  // ── AFFILIATE ITEMS ──
   const AFFILIATE_ITEMS = new Set([
     'Hiking shoes/trail runners','Rain jacket/wind breaker','Hiking pants/shorts + top',
     'Down jacket (depending on weather)','Daypack 20L - 30L','Headlamp',
@@ -1145,7 +1126,6 @@
     'PLB (Personal Locator Beacon)','Snake bite kit','First Aid Kit','Emergency Blanket'
   ]);
 
-  // ── AFFILIATE URLS — replace # with your actual affiliate links ──
   const AFFILIATE_URLS = {
     'Hiking shoes/trail runners': '#',
     'Rain jacket/wind breaker': '#',
@@ -1196,7 +1176,6 @@
     'Emergency Blanket': '#',
   };
 
-  // ── RESTORE ALL DEFAULTS ──
   const DEFAULTS = {
     day: {
       'day-0': ['Hiking shoes/trail runners','Hiking socks','Rain jacket/wind breaker','Hiking pants/shorts + top','Layers + fleece (depending on weather)','Down jacket (depending on weather)','Gaiters, if needed. Good for snake protection.'],
